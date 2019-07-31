@@ -15,6 +15,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Rhydon.Core\Rhydon.Core.csproj" />
     <ProjectReference Include="..\Rhydon.Emulator\Rhydon.Emulator.csproj" />
+    <ProjectReference Include="..\Rhydon.Pipeline\Rhydon.Pipeline.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="dnlib">
+      <HintPath>..\dnlib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
