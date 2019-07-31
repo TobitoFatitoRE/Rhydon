@@ -11,7 +11,7 @@ namespace Rhydon.Emulator {
         }
 
         public void ExecuteNext() {
-            var reader = Context.HeapReader;
+            var reader = Context.Reader;
             var code = reader.ReadKoiByte(Export);
             reader.ReadKoiByte(Export); //For "key fixup" according Koi source...
 
