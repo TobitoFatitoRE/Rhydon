@@ -3,19 +3,18 @@
 namespace Rhydon.Core.HeapParser {
     public class MethodEntry {
         public static MethodEntry Create(RhydonContext ctx) {
-            var reader = ctx.HeapReader;
-            var obj = new MethodEntry { Offset = reader.ReadUInt32() };
+            var obj = new MethodEntry { Offset = ctx.Reader.ReadUInt32() };
             if (obj.Offset != 0) {
-                obj.Key = reader.ReadUInt32();
+                obj.Key = ctx.Reader.ReadUInt32();
             }
 
-            obj.Flags = reader.ReadByte();
+            obj.Flags = ctx.Reader.ReadByte();
 
-            obj.ArgumentTypes = new ITypeDefOrRef[reader.ReadCompressedUint()];
+            obj.ArgumentTypes = new ITypeDefOrRef[ctx.Reader.ReadCompressedUint()];
             for (var i = 0; i < obj.ArgumentTypes.Length; i++)
-                obj.ArgumentTypes[i] = (ITypeDefOrRef)ctx.Module.ResolveToken(KoiHeader.FromCodedToken(reader.ReadCompressedUint()));
+                obj.ArgumentTypes[i] = (ITypeDefOrRef)ctx.Module.ResolveToken(KoiHeader.FromCodedToken(ctx.Reader.ReadCompressedUint()));
 
-            obj.ReturnType = (ITypeDefOrRef)ctx.Module.ResolveToken(KoiHeader.FromCodedToken(reader.ReadCompressedUint()));
+            obj.ReturnType = (ITypeDefOrRef)ctx.Module.ResolveToken(KoiHeader.FromCodedToken(ctx.Reader.ReadCompressedUint()));
             return obj;
         }
 

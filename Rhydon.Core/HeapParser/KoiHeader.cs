@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using dnlib.DotNet;
@@ -14,16 +15,18 @@ namespace Rhydon.Core.HeapParser {
             }
 
             ctx.Logger.Info("Parsing KoiVM header");
-            ctx.HeapReader = heap.CreateReader();
-            var reader = ctx.HeapReader;
+            ctx.Reader = new BinaryReader(heap.CreateReader().AsStream());
 
-            var magic = reader.ReadUInt32();
+            var magic = ctx.ReadUInt32();
             if (magic != 0x68736966)
                 ctx.Logger.Warning($"Magic wasn't 'fish' (0x68736966), instead: 0x{magic:X}");
 
-            var refCount = (int)reader.ReadUInt32();
-            var strCount = (int)reader.ReadUInt32();
-            var metCount = (int)reader.ReadUInt32();
+            var refCount = (int)ctx.ReadUInt32();
+            var strCount = (int)ctx.ReadUInt32();
+            var metCount = (int)ctx.ReadUInt32();
+            ctx.Logger.Debug(refCount.ToString());
+            ctx.Logger.Debug(strCount.ToString());
+            ctx.Logger.Debug(metCount.ToString());
 
             References = new Dictionary<uint, IMemberRef>(refCount);
             Strings = new Dictionary<uint, string>(strCount);
@@ -42,10 +45,9 @@ namespace Rhydon.Core.HeapParser {
         }
 
         void ReadReferences(RhydonContext ctx, int count) {
-            var reader = ctx.HeapReader;
             for (var i = 0; i < count; i++) {
-                var id = reader.ReadCompressedUint();
-                var token = FromCodedToken(reader.ReadCompressedUint());
+                var id = ctx.ReadCompressedUint();
+                var token = FromCodedToken(ctx.ReadCompressedUint());
                 var resolved = (IMemberRef)ctx.Module.ResolveToken(token);
 
                 ctx.Logger.Debug($"Reference[{id:D3}]: Token: 0x{token:X} | MemberRef: {resolved.FullName}");
@@ -54,11 +56,10 @@ namespace Rhydon.Core.HeapParser {
         }
 
         void ReadStrings(RhydonContext ctx, int count) {
-            var reader = ctx.HeapReader;
             for (var i = 0; i < count; i++) {
-                var id = reader.ReadCompressedUint();
-                var len = (int)reader.ReadCompressedUint() << 1;
-                var str = Encoding.Unicode.GetString(reader.ReadBytes(len));
+                var id = ctx.ReadCompressedUint();
+                var len = (int)ctx.ReadCompressedUint() << 1;
+                var str = Encoding.Unicode.GetString(ctx.ReadBytes(len));
 
                 ctx.Logger.Debug($"Strings[{id:D3}]: \"{str}\"");
                 Strings[id] = str;
@@ -66,9 +67,8 @@ namespace Rhydon.Core.HeapParser {
         }
 
         void ReadMethods(RhydonContext ctx, int count) {
-            var reader = ctx.HeapReader;
             for (var i = 0; i < count; i++) {
-                var id = reader.ReadCompressedUint();
+                var id = ctx.ReadCompressedUint();
                 var export = MethodEntry.Create(ctx);
 
                 ctx.Logger.Debug($"Methods[{id:D3}]: Offset: 0x{export.Offset:X8} Key: 0x{export.Key:X8}");
