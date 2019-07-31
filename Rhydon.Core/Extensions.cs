@@ -3,7 +3,7 @@ using Rhydon.Core.Parser;
 
 namespace Rhydon.Core {
     public static class Extensions {
-        public static byte ReadKoiByte(this BinaryReader reader, MethodEntry sig) {
+        public static byte ReadKoiByte(this BinaryReader reader, MethodExport sig) {
             var b = (byte)(reader.ReadInt64() ^ sig.Key);
             reader.BaseStream.Position -= 7;
             sig.Key = sig.Key * 7 + b;

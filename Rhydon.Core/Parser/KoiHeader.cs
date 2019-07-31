@@ -27,7 +27,7 @@ namespace Rhydon.Core.Parser {
 
             References = new Dictionary<uint, IMemberRef>(refCount);
             Strings = new Dictionary<uint, string>(strCount);
-            Methods = new Dictionary<uint, MethodEntry>(metCount);
+            Methods = new Dictionary<uint, MethodExport>(metCount);
 
             ReadReferences(ctx, refCount);
             ctx.Logger.Success($"Parsed {refCount} references");
@@ -66,7 +66,7 @@ namespace Rhydon.Core.Parser {
         void ReadMethods(RhydonContext ctx, int count) {
             for (var i = 0; i < count; i++) {
                 var id = ctx.ReadCompressedUint();
-                var export = MethodEntry.Create(ctx);
+                var export = MethodExport.Create(ctx);
 
                 ctx.Logger.Debug($"Methods[{id:D3}]: Offset: 0x{export.Offset:X8} Key: 0x{export.Key:X8}");
                 Methods[id] = export;
@@ -77,7 +77,7 @@ namespace Rhydon.Core.Parser {
 
         public readonly Dictionary<uint, IMemberRef> References;
         public readonly Dictionary<uint, string> Strings;
-        public readonly Dictionary<uint, MethodEntry> Methods;
+        public readonly Dictionary<uint, MethodExport> Methods;
 
         public static uint FromCodedToken(uint codedToken) {
             var rid = codedToken >> 3;
@@ -102,9 +102,9 @@ namespace Rhydon.Core.Parser {
         }
     }
 
-    public class MethodEntry {
-        public static MethodEntry Create(RhydonContext ctx) {
-            var obj = new MethodEntry { Offset = ctx.Reader.ReadUInt32() };
+    public class MethodExport {
+        public static MethodExport Create(RhydonContext ctx) {
+            var obj = new MethodExport() { Offset = ctx.Reader.ReadUInt32() };
             if (obj.Offset != 0) {
                 obj.Key = ctx.Reader.ReadUInt32();
             }

@@ -3,14 +3,14 @@ using Rhydon.Core.Parser;
 
 namespace Rhydon.Emulator {
     public class KoiEmulator {
-        public KoiEmulator(RhydonContext ctx, MethodEntry export) {
+        public KoiEmulator(RhydonContext ctx, MethodExport export) {
             Context = ctx;
             Export = export;
             Registers = new object[16];
             Ip = export.Offset;
         }
 
-        public void ExecuteNext() {
+        public void EmulateNext() {
             var reader = Context.Reader;
             var code = reader.ReadKoiByte(Export);
             reader.ReadKoiByte(Export); //For "key fixup" according Koi source...
@@ -19,7 +19,7 @@ namespace Rhydon.Emulator {
         }
 
         internal readonly RhydonContext Context;
-        internal readonly MethodEntry Export;
+        internal readonly MethodExport Export;
         internal object[] Registers;
         internal uint Ip;
     }
