@@ -7,5 +7,6 @@ namespace Rhydon.Core {
         public ModuleDefMD Module { get; set; }
         public DataReader HeapReader { get; set; }
         public KoiHeader Header { get; set; }
+        public ILogger Logger { get; set; }
     }
 }
