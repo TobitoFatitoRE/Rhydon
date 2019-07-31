@@ -76,5 +76,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rhydon.Core\Rhydon.Core.csproj">
+      <Project>{e8d8541d-0b9b-4747-84ef-6917ca580ea4}</Project>
+      <Name>Rhydon.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
