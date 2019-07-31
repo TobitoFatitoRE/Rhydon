@@ -2,7 +2,7 @@
 using dnlib.DotNet;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhydon.Core;
-using Rhydon.Core.HeapParser;
+using Rhydon.Core.Parser;
 
 namespace Rhydon.Tests {
     [TestClass]

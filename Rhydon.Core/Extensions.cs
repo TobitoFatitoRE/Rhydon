@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Rhydon.Core.HeapParser;
+using Rhydon.Core.Parser;
 
 namespace Rhydon.Core {
     public static class Extensions {

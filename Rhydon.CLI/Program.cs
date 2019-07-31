@@ -1,18 +1,20 @@
 ﻿using System;
 using dnlib.DotNet;
 using Rhydon.Core;
-using Rhydon.Core.HeapParser;
+using Rhydon.Core.Parser;
 using ILogger = Rhydon.Core.ILogger;
 
 namespace Rhydon.CLI {
     class Program {
-        static void Main(string[] args) {
-            var ctx = new RhydonContext();
-            ctx.Module = ModuleDefMD.Load("Test.exe");
-            ctx.Logger = new Logger();
+        static void Main() {
+            var ctx = new RhydonContext { Module = ModuleDefMD.Load("Test.exe"), Logger = new Logger() };
+            ctx.Header = new KoiHeader(ctx);
+            ctx.Map = OpCodeMap.Parse(ctx);
 
-            var header = new KoiHeader(ctx);
-            Console.WriteLine(header.Good);
+            Console.WriteLine(ctx.Header.Good);
+            foreach (var (key, value) in ctx.Map) {
+                Console.WriteLine($"{key:X2} : {value}");
+            }
             Console.ReadLine();
         }
 

@@ -1,5 +1,5 @@
 ﻿using Rhydon.Core;
-using Rhydon.Core.HeapParser;
+using Rhydon.Core.Parser;
 
 namespace Rhydon.Emulator {
     public class KoiEmulator {
