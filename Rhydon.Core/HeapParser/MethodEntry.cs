@@ -2,7 +2,7 @@
 
 namespace Rhydon.Core.HeapParser {
     public class MethodEntry {
-        internal static MethodEntry Create(RhydonContext ctx) {
+        public static MethodEntry Create(RhydonContext ctx) {
             var reader = ctx.HeapReader;
             var obj = new MethodEntry { Offset = reader.ReadUInt32() };
             if (obj.Offset != 0) {

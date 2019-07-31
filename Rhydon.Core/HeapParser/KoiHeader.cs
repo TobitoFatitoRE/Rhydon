@@ -8,8 +8,10 @@ namespace Rhydon.Core.HeapParser {
         public KoiHeader(RhydonContext ctx) {
             ctx.Logger.Debug("Looking for #Koi stream...");
             var heap = ctx.Module.Metadata.AllStreams.SingleOrDefault(s => s.Name == "#Koi");
-            if (heap == null)
+            if (heap == null) {
+                ctx.Logger.Error("#Koi stream not found...");
                 return;
+            }
 
             ctx.Logger.Info("Parsing KoiVM header");
             ctx.HeapReader = heap.CreateReader();

@@ -8,4 +8,10 @@
     <ProjectReference Include="..\Rhydon.Core\Rhydon.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="dnlib">
+      <HintPath>..\dnlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
