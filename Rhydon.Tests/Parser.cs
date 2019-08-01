@@ -16,8 +16,7 @@ namespace Rhydon.Tests {
             mod.Write(ms);
 
             var ctx = new RhydonContext { Module = ModuleDefMD.Load(ms), Logger = new DummyLogger() };
-            var header = new KoiHeader(ctx);
-            Assert.IsFalse(header.Good);
+            Assert.IsNull(KoiHeader.Parse(ctx));
 
             ms.Close();
         }
@@ -35,14 +34,15 @@ namespace Rhydon.Tests {
 
             var ctor = type.FindOrCreateStaticConstructor();
             var body = new CilBody();
-            body.Instructions.Insert(0, Instruction.Create(OpCodes.Stfld, type.Fields[0]));
-            body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldc_I4, 112));
-            body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldnull));
-            for (var i = 0; i < 118; i++) {
+            for (var i = 1; i < 119; i++) {
                 body.Instructions.Insert(0, Instruction.Create(OpCodes.Stfld, type.Fields[i]));
                 body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldc_I4, random.Next(0, 0xFF)));
                 body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldnull));
             }
+
+            body.Instructions.Add(Instruction.Create(OpCodes.Ldnull));
+            body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 112));
+            body.Instructions.Add(Instruction.Create(OpCodes.Stfld, type.Fields[0]));
             body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             ctor.Body = body;
 
@@ -63,7 +63,7 @@ namespace Rhydon.Tests {
 
             var mod = new ModuleDefUser("test");
             var type = new TypeDefUser("Constants");
-            for (var i = 0; i < 159; i++)
+            for (var i = 0; i < random.Next(0, 100); i++)
                 type.Fields.Add(new FieldDefUser("randomName" + random.Next(), new FieldSig(mod.CorLibTypes.Byte)));
 
             mod.Types.Add(type);

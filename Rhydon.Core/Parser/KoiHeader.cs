@@ -6,12 +6,18 @@ using dnlib.DotNet;
 
 namespace Rhydon.Core.Parser {
     public class KoiHeader {
-        public KoiHeader(RhydonContext ctx) {
+        public KoiHeader() {
+            References = new Dictionary<uint, IMemberRef>();
+            Strings = new Dictionary<uint, string>();
+            Methods = new Dictionary<uint, MethodExport>();
+        }
+
+        public static KoiHeader Parse(RhydonContext ctx) {
             ctx.Logger.Debug("Looking for #Koi stream...");
             var heap = ctx.Module.Metadata.AllStreams.SingleOrDefault(s => s.Name == "#Koi");
             if (heap == null) {
                 ctx.Logger.Error("#Koi stream not found...");
-                return;
+                return null;
             }
 
             ctx.Logger.Info("Parsing KoiVM header");
@@ -27,20 +33,20 @@ namespace Rhydon.Core.Parser {
             var strCount = (int)ctx.ReadUInt32();
             var metCount = (int)ctx.ReadUInt32();
 
-            References = new Dictionary<uint, IMemberRef>(refCount);
-            Strings = new Dictionary<uint, string>(strCount);
-            Methods = new Dictionary<uint, MethodExport>(metCount);
+            var hdr = new KoiHeader();
 
-            ReadReferences(ctx, refCount);
+            hdr.ReadReferences(ctx, refCount);
             ctx.Logger.Success($"Parsed {refCount} references");
 
-            ReadStrings(ctx, strCount);
+            hdr.ReadStrings(ctx, strCount);
             ctx.Logger.Success($"Parsed {strCount} strings");
 
-            ReadMethods(ctx, metCount);
+            hdr.ReadMethods(ctx, metCount);
             ctx.Logger.Success($"Parsed {metCount} exports");
 
-            Good = true;
+            hdr.Good = true;
+
+            return hdr;
         }
 
         void ReadReferences(RhydonContext ctx, int count) {
@@ -75,7 +81,7 @@ namespace Rhydon.Core.Parser {
             }
         }
 
-        public bool Good { get; }
+        public bool Good { get; private set; }
 
         public readonly Dictionary<uint, IMemberRef> References;
         public readonly Dictionary<uint, string> Strings;

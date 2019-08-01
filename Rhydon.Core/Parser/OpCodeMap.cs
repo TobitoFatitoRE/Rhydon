@@ -4,23 +4,26 @@ using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
 namespace Rhydon.Core.Parser {
-    public static class OpCodeMap {
-        public static Dictionary<byte, KoiOpCodes> Parse(RhydonContext ctx) {
-            var map = new Dictionary<byte, KoiOpCodes>();
-
+    public class OpCodeMap : Dictionary<byte, KoiOpCodes> {
+        public static OpCodeMap Parse(RhydonContext ctx) {
             var constantstype = ctx.Module.Types.SingleOrDefault(t => t.HasFields && t.Fields.Count == 119);
             if (constantstype == null)
                 return null;
             
+            var map = new OpCodeMap();
             var fields = constantstype.Fields.OrderBy(f => f.MDToken.Raw).ToList();
-            var ctor = constantstype.FindStaticConstructor().Body.Instructions;
-            for (var i = 1; i < ctor.Count; i++) {
-                var curr = ctor[i];
+            var ctor = constantstype.FindStaticConstructor();
+            if (ctor == null)
+                return null;
+
+            var body = ctor.Body.Instructions;
+            for (var i = 1; i < body.Count; i++) {
+                var curr = body[i];
                 if (curr.OpCode != OpCodes.Stfld)
                     continue;
 
                 var constant = (FieldDef)curr.Operand;
-                var value = (byte)ctor[i - 1].GetLdcI4Value();
+                var value = (byte)body[i - 1].GetLdcI4Value();
 
                 map[value] = (KoiOpCodes)fields.IndexOf(constant);
             }

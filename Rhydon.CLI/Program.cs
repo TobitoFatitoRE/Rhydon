@@ -8,7 +8,7 @@ namespace Rhydon.CLI {
     class Program {
         static void Main() {
             var ctx = new RhydonContext { Module = ModuleDefMD.Load("Test.exe"), Logger = new Logger() };
-            ctx.Header = new KoiHeader(ctx);
+            ctx.Header = KoiHeader.Parse(ctx);
             ctx.Map = OpCodeMap.Parse(ctx);
 
             Console.WriteLine(ctx.Header.Good);
