@@ -13,10 +13,12 @@ namespace Rhydon.Core.Parser {
         }
 
         public static KoiHeader Parse(RhydonContext ctx) {
-            ctx.Logger.Debug("Looking for #Koi stream...");
-            var heap = ctx.Module.Metadata.AllStreams.SingleOrDefault(s => s.Name == "#Koi");
+            var heapname = ctx.Parameters["heap", "Koi"];
+
+            ctx.Logger.Debug($"Looking for #{heapname} stream...");
+            var heap = ctx.Module.Metadata.AllStreams.SingleOrDefault(s => s.Name == $"#{heapname}");
             if (heap == null) {
-                ctx.Logger.Error("#Koi stream not found...");
+                ctx.Logger.Error($"#{heapname} stream not found...");
                 return null;
             }
 
@@ -43,8 +45,6 @@ namespace Rhydon.Core.Parser {
 
             hdr.ReadMethods(ctx, metCount);
             ctx.Logger.Success($"Parsed {metCount} exports");
-
-            hdr.Good = true;
 
             return hdr;
         }
@@ -80,9 +80,7 @@ namespace Rhydon.Core.Parser {
                 Methods[id] = export;
             }
         }
-
-        public bool Good { get; private set; }
-
+        
         public readonly Dictionary<uint, IMemberRef> References;
         public readonly Dictionary<uint, string> Strings;
         public readonly Dictionary<uint, MethodExport> Methods;
@@ -112,7 +110,7 @@ namespace Rhydon.Core.Parser {
 
     public class MethodExport {
         public static MethodExport Create(RhydonContext ctx) {
-            var obj = new MethodExport() { Offset = ctx.Reader.ReadUInt32() };
+            var obj = new MethodExport { Offset = ctx.Reader.ReadUInt32() };
             if (obj.Offset != 0) {
                 obj.Key = ctx.Reader.ReadUInt32();
             }

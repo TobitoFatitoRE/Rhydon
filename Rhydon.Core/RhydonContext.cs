@@ -8,6 +8,7 @@ namespace Rhydon.Core {
     public class RhydonContext {
         public RhydonContext() {
             Decompiled = new Dictionary<uint, CilBody>();
+            Parameters = new OptionalParameters();
         }
 
         public ModuleDefMD Module { get; set; }
@@ -17,6 +18,7 @@ namespace Rhydon.Core {
         public OpCodeMap Map { get; set; }
         public Dictionary<uint, CilBody> Decompiled { get; set; }
         public ILogger Logger { get; set; }
+        public OptionalParameters Parameters { get; set; }
         
         public byte[] ReadBytes(int len) =>
             Reader.ReadBytes(len);
