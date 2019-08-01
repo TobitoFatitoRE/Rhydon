@@ -15,7 +15,9 @@ namespace Rhydon.Core.Parser {
             }
 
             ctx.Logger.Info("Parsing KoiVM header");
-            ctx.Reader = new BinaryReader(heap.CreateReader().AsStream());
+            var dnlibreader = heap.CreateReader();
+            ctx.StartOffset = dnlibreader.StartOffset;
+            ctx.Reader = new BinaryReader(dnlibreader.AsStream());
 
             var magic = ctx.ReadUInt32();
             if (magic != 0x68736966)

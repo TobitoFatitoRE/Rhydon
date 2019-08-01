@@ -7,7 +7,7 @@ namespace Rhydon.Emulator {
             Context = ctx;
             Export = export;
             Registers = new object[16];
-            Ip = export.Offset;
+            Ip = ctx.StartOffset - export.Offset;
         }
 
         public void EmulateNext() {

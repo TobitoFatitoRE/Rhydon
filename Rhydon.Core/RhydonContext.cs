@@ -8,6 +8,7 @@ namespace Rhydon.Core {
         public ModuleDefMD Module { get; set; }
         public BinaryReader Reader { get; set; }
         public KoiHeader Header { get; set; }
+        public uint StartOffset { get; set; }
         public Dictionary<byte, KoiOpCodes> Map { get; set; }
         public ILogger Logger { get; set; }
         
