@@ -12,14 +12,14 @@ namespace Rhydon.Core.Parser {
             Methods = new Dictionary<uint, MethodExport>();
         }
 
-        public static KoiHeader Parse(RhydonContext ctx) {
+        public static void Parse(RhydonContext ctx) {
             var heapname = ctx.Parameters["heap", "Koi"];
 
             ctx.Logger.Debug($"Looking for #{heapname} stream...");
             var heap = ctx.Module.Metadata.AllStreams.SingleOrDefault(s => s.Name == $"#{heapname}");
             if (heap == null) {
                 ctx.Logger.Error($"#{heapname} stream not found...");
-                return null;
+                return;
             }
 
             ctx.Logger.Info("Parsing KoiVM header");
@@ -46,7 +46,7 @@ namespace Rhydon.Core.Parser {
             hdr.ReadMethods(ctx, metCount);
             ctx.Logger.Success($"Parsed {metCount} exports");
 
-            return hdr;
+            ctx.Header = hdr;
         }
 
         void ReadReferences(RhydonContext ctx, int count) {

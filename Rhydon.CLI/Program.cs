@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Drawing;
+using Colorful;
 using dnlib.DotNet;
 using Rhydon.Core;
 using Rhydon.Core.Parser;
@@ -14,34 +15,34 @@ namespace Rhydon.CLI {
             };
 
             Resolver.ResolveAssemblies(ctx);
-            ctx.Header = KoiHeader.Parse(ctx);
-            ctx.Map = OpCodeMap.Parse(ctx);
+            KoiHeader.Parse(ctx);
+            OpCodeMap.Parse(ctx);
 
             foreach (var (key, value) in ctx.Map) {
-                Console.WriteLine($"{key:X2} : {value}");
+                //Console.WriteLine($"{key:X2} : {value}");
             }
             Console.ReadLine();
         }
 
         public class Logger : ILogger {
             public void Debug(string message) {
-                Console.WriteLine(message);
+                Console.WriteLine("[-] " + message, Color.DarkGray);
             }
 
             public void Info(string message) {
-                Console.WriteLine(message);
+                Console.WriteLine("[*] " + message, Color.White);
             }
 
             public void Warning(string message) {
-                Console.WriteLine(message);
+                Console.WriteLine("[!] " + message, Color.OrangeRed);
             }
 
             public void Error(string message) {
-                Console.WriteLine(message);
+                Console.WriteLine("[#] " + message, Color.Red);
             }
 
             public void Success(string message) {
-                Console.WriteLine(message);
+                Console.WriteLine("[+] " + message, Color.Lime);
             }
         }
     }

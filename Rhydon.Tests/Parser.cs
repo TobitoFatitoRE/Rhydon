@@ -16,7 +16,8 @@ namespace Rhydon.Tests {
             mod.Write(ms);
 
             var ctx = new RhydonContext { Module = ModuleDefMD.Load(ms), Logger = new DummyLogger() };
-            Assert.IsNull(KoiHeader.Parse(ctx));
+            KoiHeader.Parse(ctx);
+            Assert.IsNull(ctx.Header);
 
             ms.Close();
         }
@@ -50,9 +51,9 @@ namespace Rhydon.Tests {
             mod.Write(ms);
 
             var ctx = new RhydonContext { Module = ModuleDefMD.Load(ms), Logger = new DummyLogger() };
-            var map = OpCodeMap.Parse(ctx);
-            Assert.IsNotNull(map);
-            Assert.IsTrue(map[112] == KoiOpCodes.REG_R0);
+            OpCodeMap.Parse(ctx);
+            Assert.IsNotNull(ctx.Map);
+            Assert.IsTrue(ctx.Map[112] == KoiOpCodes.REG_R0);
 
             ms.Close();
         }
@@ -72,8 +73,8 @@ namespace Rhydon.Tests {
             mod.Write(ms);
 
             var ctx = new RhydonContext { Module = ModuleDefMD.Load(ms), Logger = new DummyLogger() };
-            var map = OpCodeMap.Parse(ctx);
-            Assert.IsNull(map);
+            OpCodeMap.Parse(ctx);
+            Assert.IsNull(ctx.Map);
         }
     }
 }
