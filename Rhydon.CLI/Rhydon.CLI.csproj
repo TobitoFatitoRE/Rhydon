@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rhydon.Core\Rhydon.Core.csproj" />
+    <ProjectReference Include="..\Rhydon.Emulator\Rhydon.Emulator.csproj" />
   </ItemGroup>
 
   <ItemGroup>

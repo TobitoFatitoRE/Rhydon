@@ -3,6 +3,7 @@ using Colorful;
 using dnlib.DotNet;
 using Rhydon.Core;
 using Rhydon.Core.Parser;
+using Rhydon.Emulator;
 using ILogger = Rhydon.Core.ILogger;
 using Resolver = Rhydon.Core.Resolver;
 
@@ -18,9 +19,9 @@ namespace Rhydon.CLI {
             KoiHeader.Parse(ctx);
             OpCodeMap.Parse(ctx);
 
-            foreach (var (key, value) in ctx.Map) {
-                //Console.WriteLine($"{key:X2} : {value}");
-            }
+            var emu = new KoiEmulator(ctx, ctx.Header.Methods[4]);
+            emu.EmulateNext();
+
             Console.ReadLine();
         }
 

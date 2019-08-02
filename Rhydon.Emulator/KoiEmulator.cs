@@ -4,23 +4,22 @@ using Rhydon.Core.Parser;
 namespace Rhydon.Emulator {
     public class KoiEmulator {
         public KoiEmulator(RhydonContext ctx, MethodExport export) {
-            Context = ctx;
-            Export = export;
-            Registers = new object[16];
-            Ip = ctx.StartOffset - export.Offset;
+            _ctx = ctx;
+            _exp = export;
+
+            _ctx.Reader.BaseStream.Position = export.Offset;
         }
+
+        readonly RhydonContext _ctx;
+        readonly MethodExport _exp;
 
         public void EmulateNext() {
-            var reader = Context.Reader;
-            var code = reader.ReadKoiByte(Export);
-            reader.ReadKoiByte(Export); //For "key fixup" according Koi source...
+            var reader = _ctx.Reader;
+            var code = reader.ReadKoiByte(_exp);
 
-            Context.Logger.Debug($"{(KoiOpCodes)code}");
+            reader.ReadKoiByte(_exp); //For "key fixup" according Koi source...
+
+            _ctx.Logger.Debug($"{_ctx.Map[code]}");
         }
-
-        internal readonly RhydonContext Context;
-        internal readonly MethodExport Export;
-        internal object[] Registers;
-        internal uint Ip;
     }
 }
