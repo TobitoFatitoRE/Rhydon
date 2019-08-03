@@ -19,6 +19,8 @@ namespace Rhydon.Emulator {
                 .Select(Activator.CreateInstance).Cast<IKoiHandler>().ToArray()) {
                 _handlers[h.Handles] = h;
             }
+
+            ctx.Logger.Info($"Emulating virtualized method at offset: 0x{export.Offset:X8}");
         }
 
         readonly RhydonContext _ctx;
