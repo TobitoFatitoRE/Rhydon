@@ -19,7 +19,13 @@ namespace Rhydon.CLI {
             KoiHeader.Parse(ctx);
             OpCodeMap.Parse(ctx);
 
-            var emu = new KoiEmulator(ctx, ctx.Header.Methods[4]);
+            var emu = new KoiEmulator(ctx, ctx.Header.Methods[3]);
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
             emu.EmulateNext();
 
             ctx.Logger.Warning("Warning");
