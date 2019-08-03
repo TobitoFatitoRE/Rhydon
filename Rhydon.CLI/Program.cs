@@ -22,29 +22,41 @@ namespace Rhydon.CLI {
             var emu = new KoiEmulator(ctx, ctx.Header.Methods[4]);
             emu.EmulateNext();
 
+            ctx.Logger.Warning("Warning");
+            ctx.Logger.Error("Error");
+
             Console.ReadLine();
         }
 
         public class Logger : ILogger {
-            public void Debug(string message) {
-                Console.WriteLine("[-] " + message, Color.DarkGray);
+            internal Logger() {
+                _sheet = new StyleSheet(Color.White);
+                _sheet.AddStyle("(?<=\\[)\\-(?=\\])", Color.DarkGray);
+                _sheet.AddStyle("(?<=\\[)\\*(?=\\])", Color.Cyan);
+                _sheet.AddStyle("(?<=\\[)\\!(?=\\])", Color.OrangeRed);
+                _sheet.AddStyle("(?<=\\[)\\#(?=\\])", Color.Red);
+                _sheet.AddStyle("(?<=\\[)\\+(?=\\])", Color.Lime);
             }
 
-            public void Info(string message) {
-                Console.WriteLine("[*] " + message, Color.White);
-            }
+            private readonly StyleSheet _sheet;
 
-            public void Warning(string message) {
-                Console.WriteLine("[!] " + message, Color.OrangeRed);
-            }
+            void Log(string message) =>
+                Console.WriteLineStyled(message, _sheet);
 
-            public void Error(string message) {
-                Console.WriteLine("[#] " + message, Color.Red);
-            }
+            public void Debug(string message) =>
+                Log($"[-] {message}");
 
-            public void Success(string message) {
-                Console.WriteLine("[+] " + message, Color.Lime);
-            }
+            public void Info(string message) =>
+                Log($"[*] {message}");
+
+            public void Warning(string message) =>
+                Log($"[!] {message}");
+
+            public void Error(string message) =>
+                Log($"[#] {message}");
+
+            public void Success(string message) =>
+                Log($"[+] {message}");
         }
     }
 }
