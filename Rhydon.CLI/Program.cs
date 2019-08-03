@@ -27,6 +27,12 @@ namespace Rhydon.CLI {
             emu.EmulateNext();
             emu.EmulateNext();
             emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
 
             ctx.Logger.Warning("Warning");
             ctx.Logger.Error("Error");

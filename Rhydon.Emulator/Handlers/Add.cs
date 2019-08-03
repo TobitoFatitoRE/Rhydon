@@ -8,24 +8,21 @@ namespace Rhydon.Emulator.Handlers {
         }
     }
 
-    class AddQWord : IKoiHandler
-    {
+    class AddQWord : IKoiHandler {
         public KoiOpCodes Handles => KoiOpCodes.OP_ADD_QWORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
-    class AddR32 : IKoiHandler
-    {
+    class AddR32 : IKoiHandler {
         public KoiOpCodes Handles => KoiOpCodes.OP_ADD_R32;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
-    class AddR64 : IKoiHandler
-    {
+    class AddR64 : IKoiHandler {
         public KoiOpCodes Handles => KoiOpCodes.OP_ADD_R64;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();

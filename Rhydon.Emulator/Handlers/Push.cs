@@ -14,6 +14,10 @@ namespace Rhydon.Emulator.Handlers {
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
             ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+          
         }
     }
 
@@ -22,6 +26,14 @@ namespace Rhydon.Emulator.Handlers {
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
             ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+
         }
     }
 
