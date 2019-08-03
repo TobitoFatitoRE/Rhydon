@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Rhydon.Core;
 using Rhydon.Core.Parser;
@@ -9,7 +8,6 @@ namespace Rhydon.Emulator {
         public KoiEmulator(RhydonContext ctx, MethodExport export) {
             _ctx = ctx;
             _exp = export;
-            _handlers = new Dictionary<KoiOpCodes, IKoiHandler>();
             _emuCtx = new EmuContext(_ctx, _exp);
 
             _ctx.Reader.BaseStream.Position = export.Offset;
@@ -17,7 +15,7 @@ namespace Rhydon.Emulator {
             foreach (var h in typeof(KoiEmulator).Assembly.DefinedTypes
                 .Where(t => !t.IsInterface && typeof(IKoiHandler).IsAssignableFrom(t))
                 .Select(Activator.CreateInstance).Cast<IKoiHandler>().ToArray()) {
-                _handlers[h.Handles] = h;
+                _emuCtx.Handlers[h.Handles] = h;
             }
 
             ctx.Logger.Info($"Emulating virtualized method at offset: 0x{export.Offset:X8}");
@@ -26,7 +24,6 @@ namespace Rhydon.Emulator {
         readonly RhydonContext _ctx;
         readonly EmuContext _emuCtx;
         readonly MethodExport _exp;
-        readonly Dictionary<KoiOpCodes, IKoiHandler> _handlers;
 
         public void EmulateNext() {
             var reader = _ctx.Reader;
@@ -35,10 +32,7 @@ namespace Rhydon.Emulator {
             reader.ReadKoiByte(_exp); //For "key fixup" according Koi source...
 
             _ctx.Logger.Debug(code.ToString());
-            _handlers[code].Emulate(_emuCtx);
+            _emuCtx.Handlers[code].Emulate(_emuCtx);
         }
-
-        internal IKoiHandler Lookup(byte code) =>
-            _handlers[_ctx.Map[code]];
     }
 }
