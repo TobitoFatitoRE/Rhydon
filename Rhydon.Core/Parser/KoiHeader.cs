@@ -55,7 +55,7 @@ namespace Rhydon.Core.Parser {
                 var token = FromCodedToken(ctx.ReadCompressedUint());
                 var resolved = (IMemberRef)ctx.Module.ResolveToken(token);
 
-                ctx.Logger.Debug($"Reference[{id:D3}]: Token: 0x{token:X} | MemberRef: {resolved.Name}");
+                ctx.Logger.Debug($"Reference[{id:D3}]: Token: 0x{token:X8} | MemberRef: {resolved.Name}");
                 References[id] = resolved;
             }
         }

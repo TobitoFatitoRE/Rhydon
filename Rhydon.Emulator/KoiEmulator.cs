@@ -37,5 +37,8 @@ namespace Rhydon.Emulator {
             _ctx.Logger.Debug(code.ToString());
             _handlers[code].Emulate(_emuCtx);
         }
+
+        internal IKoiHandler Lookup(byte code) =>
+            _handlers[_ctx.Map[code]];
     }
 }
