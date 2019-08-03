@@ -19,6 +19,9 @@ namespace Rhydon.Emulator {
             }
 
             ctx.Logger.Info($"Emulating virtualized method at offset: 0x{export.Offset:X8}");
+
+            _emuCtx.Registers[_emuCtx.Lookup(KoiOpCodes.REG_K1)] = new VMSlot { U4 = export.Key };
+            _emuCtx.Registers[_emuCtx.Lookup(KoiOpCodes.REG_BP)] = new VMSlot { U4 = 0 };
         }
 
         readonly RhydonContext _ctx;

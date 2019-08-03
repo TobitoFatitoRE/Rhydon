@@ -4,6 +4,8 @@ using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
 namespace Rhydon.Core.Parser {
+    //TODO: Bad news, turns out that it doesn't overwrite the previous value, it very much uses it...
+    //TODO: Although I have a trick so we can get around this, it will require Reflection, will implement it. -xsilent
     public class OpCodeMap : Dictionary<byte, KoiOpCodes> {
         public static void Parse(RhydonContext ctx) {
             var constantstype = ctx.Module.Types.SingleOrDefault(t => t.HasFields && t.Fields.Count == 119);
