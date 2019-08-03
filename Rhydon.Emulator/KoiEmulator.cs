@@ -17,15 +17,7 @@ namespace Rhydon.Emulator {
             foreach (var h in typeof(KoiEmulator).Assembly.DefinedTypes
                 .Where(t => !t.IsInterface && typeof(IKoiHandler).IsAssignableFrom(t))
                 .Select(Activator.CreateInstance).Cast<IKoiHandler>().ToArray()) {
-                if (_handlers.ContainsKey(h.Handles))
-                {
-                    _handlers[h.Handles] = h;
-                }
-                else
-                {
-                    _handlers.Add(h.Handles, h);
-                }
-                //_handlers.Add(h.Handles, h);
+                _handlers[h.Handles] = h;
             }
         }
 

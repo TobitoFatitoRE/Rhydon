@@ -1,6 +1,6 @@
 ﻿using Rhydon.Core;
-namespace Rhydon.Emulator.Handlers
-{
+
+namespace Rhydon.Emulator.Handlers {
     class Pop : IKoiHandler {
         public KoiOpCodes Handles => KoiOpCodes.OP_POP;
         public void Emulate(EmuContext ctx) {
