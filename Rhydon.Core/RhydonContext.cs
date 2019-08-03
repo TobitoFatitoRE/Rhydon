@@ -26,9 +26,6 @@ namespace Rhydon.Core {
         public uint ReadUInt32() =>
             Reader.ReadUInt32();
 
-        public byte ReadKoi(MethodExport export) =>
-            Reader.ReadKoiByte(export);
-
         public uint ReadCompressedUint() =>
             Reader.ReadCompressedUint();
     }

@@ -10,6 +10,9 @@ using Resolver = Rhydon.Core.Resolver;
 namespace Rhydon.CLI {
     class Program {
         static void Main() {
+            Console.WriteAscii("Rhydon v1.0.0", Color.Coral);
+            Console.WriteLine(new string(' ', 44) + "by xsilent007 & TobitoFatito\n", Color.White);
+
             var ctx = new RhydonContext {
                 Module = ModuleDefMD.Load("Test.exe"),
                 Logger = new Logger()
@@ -19,19 +22,7 @@ namespace Rhydon.CLI {
             KoiHeader.Parse(ctx);
             OpCodeMap.Parse(ctx);
 
-            var emu = new KoiEmulator(ctx, ctx.Header.Methods[3]);
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
-            emu.EmulateNext();
+            var emu = new KoiEmulator(ctx, ctx.Header.Methods[2]);
             emu.EmulateNext();
 
             ctx.Logger.Warning("Warning");
@@ -45,9 +36,10 @@ namespace Rhydon.CLI {
                 _sheet = new StyleSheet(Color.White);
                 _sheet.AddStyle("(?<=\\[)\\-(?=\\])", Color.DarkGray);
                 _sheet.AddStyle("(?<=\\[)\\*(?=\\])", Color.Cyan);
-                _sheet.AddStyle("(?<=\\[)\\!(?=\\])", Color.OrangeRed);
+                _sheet.AddStyle("(?<=\\[)\\!(?=\\])", Color.Yellow);
                 _sheet.AddStyle("(?<=\\[)\\#(?=\\])", Color.Red);
                 _sheet.AddStyle("(?<=\\[)\\+(?=\\])", Color.Lime);
+                _sheet.AddStyle("(?<=^....)(.*)", Color.LightGray);
             }
 
             private readonly StyleSheet _sheet;
@@ -55,8 +47,8 @@ namespace Rhydon.CLI {
             void Log(string message) =>
                 Console.WriteLineStyled(message, _sheet);
 
-            public void Debug(string message) =>
-                Log($"[-] {message}");
+            public void Debug(string message) {}//=>
+                //Log($"[-] {message}");
 
             public void Info(string message) =>
                 Log($"[*] {message}");

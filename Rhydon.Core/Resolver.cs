@@ -13,7 +13,11 @@ namespace Rhydon.Core {
 
             ctx.Logger.Info("Resolving dependencies...");
             foreach (var dep in mod.GetAssemblyRefs()) {
-                var asm = resolver.ResolveThrow(dep, mod);
+                var asm = resolver.Resolve(dep, mod);
+                if (asm == null) {
+                    ctx.Logger.Warning($"Failed to resolve {dep.Name}");
+                    continue;
+                }
                 ctx.Logger.Debug($"Resolved {asm.Name}");
             }
 
