@@ -11,9 +11,15 @@ namespace Rhydon.Emulator {
             ctx.Reader.BaseStream.Position = export.Offset;
 
             foreach (var h in typeof(KoiEmulator).Assembly.DefinedTypes
-                .Where(t => !t.FullName.Contains(".VCall") && !t.IsAbstract && typeof(KoiHandler).IsAssignableFrom(t))
+                .Where(t => !t.IsAbstract && typeof(KoiHandler).IsAssignableFrom(t))
                 .Select(ha => Activator.CreateInstance(ha, _emuCtx)).Cast<KoiHandler>().ToArray()) {
                 _emuCtx.Handlers[h.Handles] = h;
+            }
+
+            foreach (var v in typeof(KoiEmulator).Assembly.DefinedTypes
+                .Where(t => !t.IsAbstract && typeof(VCallHandler).IsAssignableFrom(t))
+                .Select(ha => Activator.CreateInstance(ha, _emuCtx)).Cast<VCallHandler>().ToArray()) {
+                _emuCtx.VCallHandlers[v.VCall] = v;
             }
 
             ctx.Logger.Info($"Emulating virtualized method at offset: 0x{export.Offset:X8}");

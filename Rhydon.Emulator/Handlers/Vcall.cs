@@ -4,9 +4,9 @@
         internal override byte Handles => Ctx.Constants.OP_VCALL;
         internal override void Emulate(EmuContext ctx) {
             var val = ctx.Stack.Pop().U1;
-            var vcall = ctx.Lookup(val);
+            var vcall = ctx.LookupVCall(val);
 
-            vcall.Emulate(ctx);
+            vcall.EmulateVCall(ctx);
         }
     }
 }
