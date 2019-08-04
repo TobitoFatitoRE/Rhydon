@@ -1,8 +1,8 @@
 ﻿namespace Rhydon.Emulator.Handlers.VCall {
-    class Token : KoiHandler {
+    class Token : VCallHandler {
         public Token(EmuContext ctx) : base(ctx) { }
-        internal override byte Handles => Ctx.Constants.VCALL_TOKEN;
-        internal override void Emulate(EmuContext ctx) {
+        internal override byte VCall => Ctx.Constants.VCALL_TOKEN;
+        internal override void EmulateVCall(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }

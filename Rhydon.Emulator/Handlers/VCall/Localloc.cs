@@ -1,8 +1,8 @@
 ﻿namespace Rhydon.Emulator.Handlers.VCall {
-    class Localloc : KoiHandler {
+    class Localloc : VCallHandler {
         public Localloc(EmuContext ctx) : base(ctx) { }
-        internal override byte Handles => Ctx.Constants.VCALL_LOCALLOC;
-        internal override void Emulate(EmuContext ctx) {
+        internal override byte VCall => Ctx.Constants.VCALL_LOCALLOC;
+        internal override void EmulateVCall(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
