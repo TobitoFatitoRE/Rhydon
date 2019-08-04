@@ -2,14 +2,16 @@
 
 namespace Rhydon.Emulator.Handlers {
     class NorDword : KoiHandler {
-        public Constants Handles => Constants.OP_NOR_DWORD;
+        internal NorDword(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_NOR_DWORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class NorQword : KoiHandler {
-        public Constants Handles => Constants.OP_NOR_QWORD;
+        internal NorQword(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_NOR_QWORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }

@@ -2,14 +2,16 @@
 
 namespace Rhydon.Emulator.Handlers {
     class IConvPtr : KoiHandler {
-        public Constants Handles => Constants.OP_ICONV_PTR;
+        internal IConvPtr(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_ICONV_PTR;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class IConvR64 : KoiHandler {
-        public Constants Handles => Constants.OP_ICONV_R64;
+        internal IConvR64(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_ICONV_R64;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }

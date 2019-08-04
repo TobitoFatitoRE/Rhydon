@@ -2,21 +2,24 @@
 
 namespace Rhydon.Emulator.Handlers {
     class SxByte : KoiHandler {
-        public Constants Handles => Constants.OP_SX_BYTE;
+        internal SxByte(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_SX_BYTE;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class SxDword : KoiHandler {
-        public Constants Handles => Constants.OP_SX_DWORD;
+        internal SxDword(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_SX_DWORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class SxWord : KoiHandler {
-        public Constants Handles => Constants.OP_SX_WORD;
+        internal SxWord(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_SX_WORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }

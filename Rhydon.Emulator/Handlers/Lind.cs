@@ -2,42 +2,48 @@
 
 namespace Rhydon.Emulator.Handlers {
     class LindByte : KoiHandler {
-        public Constants Handles => Constants.OP_LIND_BYTE;
+        internal LindByte(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_LIND_BYTE;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class LindDword : KoiHandler {
-        public Constants Handles => Constants.OP_LIND_DWORD;
+        internal LindDword(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_LIND_DWORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class LindObject : KoiHandler {
-        public Constants Handles => Constants.OP_LIND_OBJECT;
+        internal LindObject(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_LIND_OBJECT;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class LindPtr : KoiHandler {
-        public Constants Handles => Constants.OP_LIND_PTR;
+        internal LindPtr(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_LIND_PTR;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class LindQword : KoiHandler {
-        public Constants Handles => Constants.OP_LIND_QWORD;
+        internal LindQword(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_LIND_QWORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }
 
     class LindWord : KoiHandler {
-        public Constants Handles => Constants.OP_LIND_WORD;
+        internal LindWord(EmuContext ctx) : base(ctx) { }
+        internal override byte Handles => Ctx.Constants.OP_LIND_WORD;
         public void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
