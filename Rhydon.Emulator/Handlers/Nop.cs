@@ -1,10 +1,8 @@
-﻿using Rhydon.Core;
-
-namespace Rhydon.Emulator.Handlers {
+﻿namespace Rhydon.Emulator.Handlers {
     class Nop : KoiHandler {
-        internal Nop(EmuContext ctx) : base(ctx) { }
+        public Nop(EmuContext ctx) : base(ctx) { }
         internal override byte Handles => Ctx.Constants.OP_NOP;
-        public void Emulate(EmuContext ctx) {
+        internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
         }
     }

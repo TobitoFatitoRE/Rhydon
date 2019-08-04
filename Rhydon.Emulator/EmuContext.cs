@@ -11,6 +11,7 @@ namespace Rhydon.Emulator {
             Stack = new Stack<VMSlot>();
             Registers = new VMSlot[16];
             Handlers = new Dictionary<byte, KoiHandler>();
+            VCallHandlers = new Dictionary<byte, VCallHandler>();
 
             Module = ctx.Module;
             Reader = ctx.Reader;
@@ -27,9 +28,13 @@ namespace Rhydon.Emulator {
         internal Stack<VMSlot> Stack { get; }
         internal VMSlot[] Registers { get; set; }
         internal Dictionary<byte, KoiHandler> Handlers { get; }
+        internal Dictionary<byte, VCallHandler> VCallHandlers { get; }
 
         internal KoiHandler Lookup(byte code) =>
             Handlers[code];
+
+        internal VCallHandler LookupVCall(byte code) =>
+            VCallHandlers[code];
         
         internal byte ReadByte() =>
             Reader.ReadKoiByte(Export);

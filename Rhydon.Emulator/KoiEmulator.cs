@@ -11,8 +11,8 @@ namespace Rhydon.Emulator {
             ctx.Reader.BaseStream.Position = export.Offset;
 
             foreach (var h in typeof(KoiEmulator).Assembly.DefinedTypes
-                .Where(t => !t.IsInterface && typeof(KoiHandler).IsAssignableFrom(t))
-                .Select(Activator.CreateInstance).Cast<KoiHandler>().ToArray()) {
+                .Where(t => !t.FullName.Contains(".VCall") && !t.IsAbstract && typeof(KoiHandler).IsAssignableFrom(t))
+                .Select(ha => Activator.CreateInstance(ha, _emuCtx)).Cast<KoiHandler>().ToArray()) {
                 _emuCtx.Handlers[h.Handles] = h;
             }
 
@@ -28,7 +28,9 @@ namespace Rhydon.Emulator {
             var code = _emuCtx.ReadByte();
             _emuCtx.ReadByte(); //For "key fixup" according Koi source...
 
-            _emuCtx.Handlers[code].Emulate(_emuCtx);
+            var handler = _emuCtx.Handlers[code];
+            _emuCtx.Logger.Info($"OpCode: {handler}");
+            handler.Emulate(_emuCtx);
         }
     }
 }

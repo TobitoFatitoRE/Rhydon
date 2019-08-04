@@ -1,10 +1,8 @@
-﻿using Rhydon.Core;
-
-namespace Rhydon.Emulator.Handlers {
+﻿namespace Rhydon.Emulator.Handlers {
     class Vcall : KoiHandler {
-        internal Vcall(EmuContext ctx) : base(ctx) { }
+        public Vcall(EmuContext ctx) : base(ctx) { }
         internal override byte Handles => Ctx.Constants.OP_VCALL;
-        public void Emulate(EmuContext ctx) {
+        internal override void Emulate(EmuContext ctx) {
             var val = ctx.Stack.Pop().U1;
             var vcall = ctx.Lookup(val);
 

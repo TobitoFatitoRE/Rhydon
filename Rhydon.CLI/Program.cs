@@ -24,9 +24,20 @@ namespace Rhydon.CLI {
 
             var emu = new KoiEmulator(ctx, ctx.Header.Methods[2]);
             emu.EmulateNext();
-
-            ctx.Logger.Warning("Warning");
-            ctx.Logger.Error("Error");
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
+            emu.EmulateNext();
 
             Console.ReadLine();
         }
