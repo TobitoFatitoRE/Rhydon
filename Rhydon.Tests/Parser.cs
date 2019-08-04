@@ -52,8 +52,8 @@ namespace Rhydon.Tests {
 
             var ctx = new RhydonContext { Module = ModuleDefMD.Load(ms), Logger = new DummyLogger() };
             OpCodeMap.Parse(ctx);
-            Assert.IsNotNull(ctx.Map);
-            Assert.IsTrue(ctx.Map[112] == KoiOpCodes.REG_R0);
+            Assert.IsNotNull(ctx.Constants);
+            Assert.IsTrue(ctx.Constants.REG_R0 == 112);
 
             ms.Close();
         }
@@ -74,7 +74,7 @@ namespace Rhydon.Tests {
 
             var ctx = new RhydonContext { Module = ModuleDefMD.Load(ms), Logger = new DummyLogger() };
             OpCodeMap.Parse(ctx);
-            Assert.IsNull(ctx.Map);
+            Assert.IsNull(ctx.Constants);
         }
     }
 }

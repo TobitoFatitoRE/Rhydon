@@ -15,7 +15,7 @@ namespace Rhydon.Core {
         public BinaryReader Reader { get; set; }
         public KoiHeader Header { get; set; }
         public uint StartOffset { get; set; }
-        public OpCodeMap Map { get; set; }
+        public Constants Constants { get; set; }
         public Dictionary<uint, CilBody> Decompiled { get; set; }
         public ILogger Logger { get; set; }
         public OptionalParameters Parameters { get; set; }

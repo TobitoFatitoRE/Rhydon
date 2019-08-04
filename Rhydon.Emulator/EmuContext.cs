@@ -10,13 +10,13 @@ namespace Rhydon.Emulator {
             MethodBody = new List<KoiInstruction>();
             Stack = new Stack<VMSlot>();
             Registers = new VMSlot[16];
-            Handlers = new Dictionary<KoiOpCodes, IKoiHandler>();
+            Handlers = new Dictionary<byte, KoiHandler>();
 
             Module = ctx.Module;
             Reader = ctx.Reader;
             Header = ctx.Header;
             StartOffset = ctx.StartOffset;
-            Map = ctx.Map;
+            Constants = ctx.Constants;
             Decompiled = ctx.Decompiled;
             Logger = ctx.Logger;
             Parameters = ctx.Parameters;
@@ -26,14 +26,11 @@ namespace Rhydon.Emulator {
         internal List<KoiInstruction> MethodBody { get; }
         internal Stack<VMSlot> Stack { get; }
         internal VMSlot[] Registers { get; set; }
-        internal Dictionary<KoiOpCodes, IKoiHandler> Handlers { get; }
+        internal Dictionary<byte, KoiHandler> Handlers { get; }
 
-        internal IKoiHandler Lookup(byte code) =>
-            Handlers[Map[code]];
-
-        internal byte Lookup(KoiOpCodes code) =>
-            Map.First(p => p.Value == code).Key;
-
+        internal KoiHandler Lookup(byte code) =>
+            Handlers[code];
+        
         internal byte ReadByte() =>
             Reader.ReadKoiByte(Export);
     }

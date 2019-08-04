@@ -6,35 +6,28 @@ using Rhydon.Core.Parser;
 namespace Rhydon.Emulator {
     public class KoiEmulator {
         public KoiEmulator(RhydonContext ctx, MethodExport export) {
-            _ctx = ctx;
-            _exp = export;
-            _emuCtx = new EmuContext(_ctx, _exp);
+            _emuCtx = new EmuContext(ctx, export);
 
-            _ctx.Reader.BaseStream.Position = export.Offset;
+            ctx.Reader.BaseStream.Position = export.Offset;
 
             foreach (var h in typeof(KoiEmulator).Assembly.DefinedTypes
-                .Where(t => !t.IsInterface && typeof(IKoiHandler).IsAssignableFrom(t))
-                .Select(Activator.CreateInstance).Cast<IKoiHandler>().ToArray()) {
+                .Where(t => !t.IsInterface && typeof(KoiHandler).IsAssignableFrom(t))
+                .Select(Activator.CreateInstance).Cast<KoiHandler>().ToArray()) {
                 _emuCtx.Handlers[h.Handles] = h;
             }
 
             ctx.Logger.Info($"Emulating virtualized method at offset: 0x{export.Offset:X8}");
 
-            _emuCtx.Registers[_emuCtx.Lookup(KoiOpCodes.REG_K1)] = new VMSlot { U4 = export.Key };
-            _emuCtx.Registers[_emuCtx.Lookup(KoiOpCodes.REG_BP)] = new VMSlot { U4 = 0 };
+            //_emuCtx.Registers[_emuCtx.Lookup(KoiOpCodes.REG_K1)] = new VMSlot { U4 = export.Key };
+            //_emuCtx.Registers[_emuCtx.Lookup(KoiOpCodes.REG_BP)] = new VMSlot { U4 = 0 };
         }
 
-        readonly RhydonContext _ctx;
         readonly EmuContext _emuCtx;
-        readonly MethodExport _exp;
 
         public void EmulateNext() {
-            var reader = _ctx.Reader;
-            var code = _ctx.Map[reader.ReadKoiByte(_exp)];
+            var code = _emuCtx.ReadByte();
+            _emuCtx.ReadByte(); //For "key fixup" according Koi source...
 
-            reader.ReadKoiByte(_exp); //For "key fixup" according Koi source...
-
-            _ctx.Logger.Debug(code.ToString());
             _emuCtx.Handlers[code].Emulate(_emuCtx);
         }
     }

@@ -1,8 +1,8 @@
 ﻿using Rhydon.Core;
 
 namespace Rhydon.Emulator.Handlers {
-    class Vcall : IKoiHandler {
-        public KoiOpCodes Handles => KoiOpCodes.OP_VCALL;
+    class Vcall : KoiHandler {
+        public Constants Handles => Constants.OP_VCALL;
         public void Emulate(EmuContext ctx) {
             var val = ctx.Stack.Pop().U1;
             var vcall = ctx.Lookup(val);

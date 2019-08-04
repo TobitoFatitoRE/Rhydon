@@ -1,5 +1,5 @@
 ﻿namespace Rhydon.Core {
-    public enum KoiOpCodes : byte {
+    public enum KoiOpCode : byte {
         REG_R0,
         REG_R1,
         REG_R2,

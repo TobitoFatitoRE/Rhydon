@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 
 namespace Rhydon.Core.Parser {
-    //TODO: Bad news, turns out that it doesn't overwrite the previous value, it very much uses it...
-    //TODO: Although I have a trick so we can get around this, it will require Reflection, will implement it. -xsilent
-    public class OpCodeMap : Dictionary<byte, KoiOpCodes> {
+    public class OpCodeMap {
         public static void Parse(RhydonContext ctx) {
             var constantstype = ctx.Module.Types.SingleOrDefault(t => t.HasFields && t.Fields.Count == 119);
             if (constantstype == null)
                 return;
             
-            var map = new OpCodeMap();
             var fields = constantstype.Fields.OrderBy(f => f.MDToken.Raw).ToList();
             var ctor = constantstype.FindStaticConstructor();
             if (ctor == null)
                 return;
 
+            var constants = new Constants();
             var body = ctor.Body.Instructions;
+            var sortedconstants = constants.GetType().GetFields().OrderBy(f => f.MetadataToken).ToArray();
             for (var i = 1; i < body.Count; i++) {
                 var curr = body[i];
                 if (curr.OpCode != OpCodes.Stfld)
@@ -27,10 +25,10 @@ namespace Rhydon.Core.Parser {
                 var constant = (FieldDef)curr.Operand;
                 var value = (byte)body[i - 1].GetLdcI4Value();
 
-                map[value] = (KoiOpCodes)fields.IndexOf(constant);
+                sortedconstants[fields.IndexOf(constant)].SetValue(constants, value);
             }
 
-            ctx.Map = map;
+            ctx.Constants = constants;
         }
     }
 }
