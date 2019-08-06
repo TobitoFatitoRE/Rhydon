@@ -1,9 +1,16 @@
-﻿namespace Rhydon.Emulator.Handlers.VCall {
+﻿using System.Reflection;
+
+namespace Rhydon.Emulator.Handlers.VCall {
     class Ecall : VCallHandler {
         public Ecall(EmuContext ctx) : base(ctx) { }
         internal override byte VCall => Ctx.Constants.VCALL_ECALL;
         internal override void EmulateVCall(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot slot = ctx.Stack.Pop();
+            uint id = slot.U4 & 1073741823u;
+            byte b = (byte)(slot.U4 >> 30);
+            MethodBase methodBase = (MethodBase)ctx.Header.References[id];
+            ctx.Logger.Info("Emulating VCall OpCode - Found Method: " + methodBase.ToString()); // tostring gives more info than .name :P
         }
     }
 }

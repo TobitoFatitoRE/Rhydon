@@ -20,6 +20,9 @@
         internal override byte Handles => Ctx.Constants.OP_ADD_R32;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot first = ctx.Stack.Pop();
+            VMSlot second = ctx.Stack.Pop();
+            ctx.Stack.Push(new VMSlot() { R4 = second.R4 + first.R4});
         }
     }
 

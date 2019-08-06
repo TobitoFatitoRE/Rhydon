@@ -19,11 +19,15 @@ namespace Rhydon.Emulator.Handlers {
         internal override byte Handles => Ctx.Constants.OP_PUSHI_DWORD;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-          
+            ulong num2 = (ulong)ctx.ReadByte();
+            num2 |= (ulong)ctx.ReadByte() << 8;
+            num2 |= (ulong)ctx.ReadByte() << 16;
+            num2 |= (ulong)ctx.ReadByte() << 24;
+            int lol = int.MinValue;
+            ulong num3 = ((num2 & (ulong)lol) != 0UL) ? 18446744069414584320UL : 0UL;
+            VMSlot newslot = new VMSlot();
+            newslot.U8 = (num3 | num2);
+            ctx.Stack.Push(newslot);
         }
     }
 
@@ -32,14 +36,15 @@ namespace Rhydon.Emulator.Handlers {
         internal override byte Handles => Ctx.Constants.OP_PUSHI_QWORD;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            ulong num2 = (ulong)ctx.ReadByte();
+            num2 |= (ulong)ctx.ReadByte() << 8;
+            num2 |= (ulong)ctx.ReadByte() << 16;
+            num2 |= (ulong)ctx.ReadByte() << 24;
+            num2 |= (ulong)ctx.ReadByte() << 32;
+            num2 |= (ulong)ctx.ReadByte() << 40;
+            num2 |= (ulong)ctx.ReadByte() << 48;
+            num2 |= (ulong)ctx.ReadByte() << 56;
+            ctx.Stack.Push(new VMSlot() { U8 = num2});
 
         }
     }
@@ -59,7 +64,9 @@ namespace Rhydon.Emulator.Handlers {
         internal override byte Handles => Ctx.Constants.OP_PUSHR_OBJECT;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            byte b = ctx.ReadByte();
+            VMSlot value = ctx.Registers[(int)b];
+            ctx.Stack.Push(value);
         }
     }
 
@@ -68,7 +75,9 @@ namespace Rhydon.Emulator.Handlers {
         internal override byte Handles => Ctx.Constants.OP_PUSHR_QWORD;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
-            ctx.Reader.ReadKoiByte(ctx.Export); // ReadByte gets used on original opcode.
+            byte b = ctx.ReadByte();
+            VMSlot vmslot = ctx.Registers[(int)b];
+            ctx.Stack.Push(new VMSlot() { U8 = vmslot.U8 });
         }
     }
 
@@ -78,7 +87,6 @@ namespace Rhydon.Emulator.Handlers {
         internal override void Emulate(EmuContext ctx) {
             var regid = ctx.ReadByte();
             var slot = ctx.Registers[regid];
-
             ctx.Stack.Push(new VMSlot { U2 = slot.U2 });
         }
     }
