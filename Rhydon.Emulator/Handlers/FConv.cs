@@ -4,6 +4,9 @@
         internal override byte Handles => Ctx.Constants.OP_FCONV_R32;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot slot = ctx.Stack.Pop();
+            slot.R4 = (float)slot.U8;
+            ctx.Stack.Push(slot);
         }
     }
 
@@ -12,6 +15,9 @@
         internal override byte Handles => Ctx.Constants.OP_FCONV_R32_R64;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot slot = ctx.Stack.Pop();
+            slot.R8 = (double)slot.R4;
+            ctx.Stack.Push(slot);
         }
     }
 
@@ -20,6 +26,9 @@
         internal override byte Handles => Ctx.Constants.OP_FCONV_R64;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot slot = ctx.Stack.Pop();
+            slot.R8 = (double)slot.U8;
+            ctx.Stack.Push(slot);
         }
     }
 
@@ -28,6 +37,9 @@
         internal override byte Handles => Ctx.Constants.OP_FCONV_R64_R32;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot slot = ctx.Stack.Pop();
+            slot.R4 = (float)slot.R8;
+            ctx.Stack.Push(slot);
         }
     }
 }

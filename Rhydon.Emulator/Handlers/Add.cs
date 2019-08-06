@@ -4,6 +4,9 @@
         internal override byte Handles => Ctx.Constants.OP_ADD_DWORD;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot vmslot = ctx.Stack.Pop();
+            VMSlot vmslot2 = ctx.Stack.Pop();
+          //  if(vmslot.O is IReference) TODO: IReference?
         }
     }
 
@@ -12,6 +15,10 @@
         internal override byte Handles => Ctx.Constants.OP_ADD_QWORD;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot vmslot = ctx.Stack.Pop();
+            VMSlot vmslot2 = ctx.Stack.Pop();
+            //  if(vmslot.O is IReference) TODO: IReference?
+
         }
     }
 
@@ -31,6 +38,9 @@
         internal override byte Handles => Ctx.Constants.OP_ADD_R64;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot first = ctx.Stack.Pop();
+            VMSlot second = ctx.Stack.Pop();
+            ctx.Stack.Push(new VMSlot() { R8 = second.R8 + first.R8 });
         }
     }
 }

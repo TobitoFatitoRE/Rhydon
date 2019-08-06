@@ -20,6 +20,10 @@
         internal override byte Handles => Ctx.Constants.OP_DIV_R32;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot first = ctx.Stack.Pop();
+            VMSlot second = ctx.Stack.Pop();
+            ctx.Stack.Push(new VMSlot() { R4 = first.R4 / second.R4 });
+
         }
     }
 
@@ -28,6 +32,10 @@
         internal override byte Handles => Ctx.Constants.OP_DIV_R64;
         internal override void Emulate(EmuContext ctx) {
             //throw new System.NotImplementedException();
+            VMSlot first = ctx.Stack.Pop();
+            VMSlot second = ctx.Stack.Pop();
+            ctx.Stack.Push(new VMSlot() { R8 = first.R8 / second.R8 });
+
         }
     }
 }
