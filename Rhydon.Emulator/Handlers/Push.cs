@@ -9,7 +9,7 @@ namespace Rhydon.Emulator.Handlers {
             var slot = ctx.Registers[regid];
 
             if (regid == ctx.Constants.REG_SP || regid == Ctx.Constants.REG_BP)
-                ctx.Stack.Push(VMSlot.Null); //TODO: StackRef
+                ctx.Stack.Push(new VMSlot() { O = new StackRef(slot.U4) }); //TODO: StackRef
             else ctx.Stack.Push(new VMSlot { U4 = slot.U4 });
         }
     }

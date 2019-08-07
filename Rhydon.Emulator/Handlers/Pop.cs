@@ -6,8 +6,10 @@
             var slot = ctx.Stack.Pop();
             var regid = ctx.ReadByte();
 
-            if (regid == ctx.Constants.REG_SP || regid == ctx.Constants.REG_BP && slot.O is null)
-                ctx.Registers[regid] = VMSlot.Null;
+            if (regid == ctx.Constants.REG_SP || regid == ctx.Constants.REG_BP && slot.O is StackRef)
+                ctx.Registers[regid] = new VMSlot {
+                    U4 = ((StackRef)slot.O).StackPos
+                };
             else ctx.Registers[regid] = slot;
         }
     }
