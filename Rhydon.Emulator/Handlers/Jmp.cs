@@ -3,7 +3,8 @@
         public Jmp(EmuContext ctx) : base(ctx) { }
         internal override byte Handles => Ctx.Constants.OP_JMP;
         internal override void Emulate(EmuContext ctx) {
-            //throw new System.NotImplementedException();
+            var slot = ctx.Stack.Pop();
+            ctx.Reader.BaseStream.Position = (long)slot.U8;
         }
     }
 

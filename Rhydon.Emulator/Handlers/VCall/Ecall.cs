@@ -9,8 +9,8 @@ namespace Rhydon.Emulator.Handlers.VCall {
             VMSlot slot = ctx.Stack.Pop();
             uint id = slot.U4 & 1073741823u;
             byte b = (byte)(slot.U4 >> 30);
-            MethodBase methodBase = (MethodBase)ctx.Header.References[id];
-            ctx.Logger.Info("Emulating VCall OpCode - Found Method: " + methodBase.ToString()); // tostring gives more info than .name :P
+            var method = ctx.Header.References[id].FullName;
+            ctx.Logger.Info("Emulating VCall OpCode - Found Method: " + method); // tostring gives more info than .name :P
         }
     }
 }
