@@ -15,5 +15,17 @@ namespace Rhydon.Emulator {
         public IReference Add(ulong value) {
             return new StackRef(this.StackPos + (uint)value);
         }
+
+        public VMSlot GetValue(EmuContext ctx, PointerType type) {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(EmuContext ctx, VMSlot slot, PointerType type) {
+            throw new NotImplementedException();
+        }
+
+        public void ToTypedReference(EmuContext ctx, TypedRefPtr typedRef, Type type) {
+            throw new NotImplementedException();
+        }
     }
 }
