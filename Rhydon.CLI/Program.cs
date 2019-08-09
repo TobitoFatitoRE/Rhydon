@@ -6,7 +6,6 @@ using Rhydon.Core.Parser;
 using Rhydon.Emulator;
 using ILogger = Rhydon.Core.ILogger;
 using Resolver = Rhydon.Core.Resolver;
-
 namespace Rhydon.CLI {
     class Program {
         static void Main() {
@@ -21,6 +20,7 @@ namespace Rhydon.CLI {
             Resolver.ResolveAssemblies(ctx);
             KoiHeader.Parse(ctx);
             OpCodeMap.Parse(ctx);
+            VirtualizedMethods.Parse(ctx);
 
             var emu = new KoiEmulator(ctx, ctx.Header.Methods[2]);
             emu.EmulateNext();

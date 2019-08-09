@@ -26,8 +26,8 @@ namespace Rhydon.Emulator {
 
             _emuCtx.Registers[ctx.Constants.REG_K1] = new VMSlot { U4 = export.Key };
             _emuCtx.Registers[ctx.Constants.REG_BP] = new VMSlot { U4 = 0 };
-            _emuCtx.Registers[ctx.Constants.REG_SP] = new VMSlot { U4 = (uint)(1 + 1 + 1) };
-            _emuCtx.Registers[ctx.Constants.REG_IP] = new VMSlot { U8 = 14280362 };
+            _emuCtx.Registers[ctx.Constants.REG_SP] = new VMSlot { U4 = (uint)(export.ArgumentTypes.Length + 1) };
+            _emuCtx.Registers[ctx.Constants.REG_IP] = new VMSlot { U8 = (ulong)ctx.Reader.BaseStream.Position };
         }
 
         readonly EmuContext _emuCtx;

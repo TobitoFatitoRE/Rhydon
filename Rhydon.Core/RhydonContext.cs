@@ -19,6 +19,7 @@ namespace Rhydon.Core {
         public Dictionary<uint, CilBody> Decompiled { get; set; }
         public ILogger Logger { get; set; }
         public OptionalParameters Parameters { get; set; }
+        public Dictionary<int,MethodDef> VirtualizedMethods { get; set; }
         
         public byte[] ReadBytes(int len) =>
             Reader.ReadBytes(len);

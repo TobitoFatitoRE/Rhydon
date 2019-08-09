@@ -112,7 +112,7 @@ namespace Rhydon.Core.Parser {
         public static MethodExport Create(RhydonContext ctx) {
             var obj = new MethodExport { Offset = ctx.Reader.ReadUInt32() };
             if (obj.Offset != 0) {
-                obj.Key = ctx.StartOffset + ctx.Reader.ReadUInt32();
+                obj.Key = ctx.Reader.ReadUInt32();
             }
 
             obj.Flags = ctx.Reader.ReadByte();
