@@ -23,10 +23,10 @@ namespace Rhydon.Emulator.Handlers.VCall {
             }
             bool flag3 = fieldInfo.DeclaringType.IsValueType && slot3.O is IReference;
             if (flag3) {
-            //    TypedReference obj;
-            //    ((IReference)slot3.O).ToTypedReference(ctx, (void*)(&obj), fieldInfo.DeclaringType);
-           //     TypedReferenceHelpers.CastTypedRef((void*)(&obj), fieldInfo.DeclaringType); TODO: TypedReferenceHelpers
-            //    fieldInfo.SetValueDirect(obj, value);
+                TypedReference obj;
+                ((IReference)slot3.O).ToTypedReference(ctx, (void*)(&obj), fieldInfo.DeclaringType);
+                Rhydon.Emulator.Helpers.TypedReferenceHelpers.CastTypedRef((void*)(&obj), fieldInfo.DeclaringType);
+                fieldInfo.SetValueDirect(obj, value);
             } else {
                 fieldInfo.SetValue(slot3.ToObject(fieldInfo.DeclaringType), value);
             }

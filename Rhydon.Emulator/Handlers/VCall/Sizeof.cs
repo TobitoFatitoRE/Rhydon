@@ -6,7 +6,7 @@ namespace Rhydon.Emulator.Handlers.VCall {
         internal override void EmulateVCall(EmuContext ctx) {
             Type type = (Type)ctx.Header.References[ctx.Stack.Pop().U4];
             ctx.Stack.Push(new VMSlot() { U4 = (uint)SizeOfHelper.SizeOf(type) });
-            //TO FIX SIZEOFHELPER!!!!
+            //Fixed :)
         }
     }
 }

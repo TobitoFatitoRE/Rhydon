@@ -14,7 +14,16 @@ namespace Rhydon.Emulator.Handlers.VCall {
                 return;
             }
             if(flag) {
-            //    ctx.Stack.Push(new VMSlot() { O = new FieldRef(slot2.O, fieldInfo) }); Todo: FieldRef (feelsbad)
+                ctx.Stack.Push(new VMSlot() { O = new FieldRef(slot2.O, fieldInfo) });
+            } else {
+                bool flag4 = fieldInfo.DeclaringType.IsValueType && slot2.O is IReference;
+                object obj;
+                if (flag4) {
+                    obj = ((IReference)slot2.O).GetValue(ctx, PointerType.OBJECT).ToObject(fieldInfo.DeclaringType);
+                } else {
+                    obj = slot2.ToObject(fieldInfo.DeclaringType);
+                }
+                ctx.Stack.Push(VMSlot.FromObject(fieldInfo.GetValue(obj), fieldInfo.FieldType));
             }
         }
     }

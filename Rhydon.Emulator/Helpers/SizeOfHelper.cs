@@ -31,21 +31,20 @@ namespace Rhydon.Emulator {
 
  
         private static int GetSize(Type type) {
-            /* DynamicMethod dynamicMethod = new DynamicMethod("", typeof(int), Type.EmptyTypes, Unverifier.Module, true);
+             DynamicMethod dynamicMethod = new DynamicMethod("", typeof(int), Type.EmptyTypes, Unverifier.Module, true);
              ILGenerator ilgenerator = dynamicMethod.GetILGenerator();
              ilgenerator.Emit(OpCodes.Sizeof, type);
              ilgenerator.Emit(OpCodes.Ret);
-             return (int)dynamicMethod.Invoke(null, null);*/ 
-            return 0;
+             return (int)dynamicMethod.Invoke(null, null);
         }
 
-        // Token: 0x04000046 RID: 70
+       
         private static readonly Hashtable sizes = new Hashtable();
     }
     internal static class Unverifier {
-        // Token: 0x060001B6 RID: 438 RVA: 0x0000B2E4 File Offset: 0x000094E4
+     
         static Unverifier() {
-          /*  AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName("Fish"), AssemblyBuilderAccess.Run);
+            AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("Fish"), AssemblyBuilderAccess.Run);
             ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule("Fish");
             CustomAttributeBuilder customAttribute = new CustomAttributeBuilder(typeof(SecurityPermissionAttribute).GetConstructor(new Type[]
             {
@@ -61,10 +60,10 @@ namespace Rhydon.Emulator {
                 true
             });
             moduleBuilder.SetCustomAttribute(customAttribute);
-            Unverifier.Module = moduleBuilder.DefineType(" ").CreateType().Module;*/
+            Unverifier.Module = moduleBuilder.DefineType(" ").CreateTypeInfo().AsType().Module;
         }
 
-        // Token: 0x04000054 RID: 84
+
         public static readonly Module Module;
     }
 }
