@@ -3,7 +3,7 @@
         public Throw(EmuContext ctx) : base(ctx) { }
         internal override byte VCall => Ctx.Constants.VCALL_THROW;
         internal override void EmulateVCall(EmuContext ctx) {
-            //throw new System.NotImplementedException();
+            uint u2 = ctx.Stack.Pop().U4;
         }
     }
 }
